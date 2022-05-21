@@ -1,0 +1,13 @@
+import React from 'react'
+
+const AddProduct = () => {
+	return (
+		<>
+
+			<h1>Add product</h1>
+
+		</>
+	)
+}
+
+export default AddProduct
