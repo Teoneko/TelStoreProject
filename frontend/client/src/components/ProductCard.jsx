@@ -1,10 +1,25 @@
 import React from 'react'
+import { Card, Button } from 'react-bootstrap'
+import { Link } from 'react-router-dom'
 
-const ProductCard = () => {
+const ProductCard = ({ product }) => {
 	return (
-		<div>
-			<h1>Product Card</h1>
-		</div>
+		<>
+			<Card className='shadow-lg m-2 p-3 rounded' style={{ width: '18rem' }}>
+				<Card.Body>
+					<Card.Title>Title: {product.title}</Card.Title>
+					<Card.Title>Price: ${product.price}</Card.Title>
+					<Card.Text>
+						Desctiption: {product.description}
+					</Card.Text>
+					<Link to={`product/${product.id}`}>
+					<Button>Detail</Button>
+				</Link>
+				</Card.Body>
+			</Card>
+
+
+		</>
 	)
 }
 
