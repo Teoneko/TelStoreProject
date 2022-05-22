@@ -9,7 +9,10 @@ const Review = db.reviews
 
 const addReview = async (req, res) => {
 
+	const id = req.params.id
+
 	let data = {
+		product_id: id,
 		rating: req.body.rating,
 		description: req.body.description
 	}
