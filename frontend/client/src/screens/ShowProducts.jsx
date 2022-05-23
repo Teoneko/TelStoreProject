@@ -18,14 +18,14 @@ const ShowProducts = () => {
 
 	return (
 		<>
-			<Container className="justify-content-center m-5 p-2">
+			<Container className="justify-content-center p-2">
 				<h1 className='text-center'>Show All Products</h1>
 				<hr />
 
 				<Row>
 					{
 						products.map(product => {
-							return <Col md={8} lg={12} sm={12} key={product.id}>
+							return <Col md={6} lg={4} sm={12} key={product.id}>
 								<ProductCard product={product} />
 							</Col>
 						})
