@@ -13,9 +13,12 @@ const ProductDetail = () => {
 	const [title, setTitle] = useState('')
 	const [price, setPrice] = useState(0)
 	const [productDescription, setProductDescription] = useState('')
-	const [reviews, setReviews] = useState([])
+	const [published, setPublished] = useState(true)
+	const [productImage, setProductImage] = useState('')
+
 	// for review rating and description
 	const [rating, setRating] = useState(0)
+	const [reviews, setReviews] = useState([])
 	const [reviewDescription, setReviewDescription] = useState('')
 
 
@@ -25,9 +28,12 @@ const ProductDetail = () => {
 		const getSingleProductsData = async () => {
 			const { data } = await axios.get(`/api/products/getProductReviews/${id}`);
 			console.log(data);
+
 			setTitle(data.title);
 			setPrice(data.price);
-			setProductDescription(data.description)
+			setProductDescription(data.description);
+			setPublished(data.published);
+			setProductImage(data.image);
 
 			//for reviews
 			setReviews(data.review)
@@ -64,12 +70,16 @@ const ProductDetail = () => {
 			<Container className='mt-10 p-4'>
 				<h1>Detail Product</h1>
 
-				<Card className='shadow-lg m-2 p-3 rounded' style={{ width: '18rem' }}>
+				<Card className='shadow-lg m-5 p-3 rounded' style={{ width: '18rem' }}>
+				<Card.Img src={`http://localhost:3000/${productImage}`}/>
 					<Card.Body>
 						<Card.Title>Title: {title}</Card.Title>
 						<Card.Title>Price: ${price}</Card.Title>
 						<Card.Text>
 							Desctiption: {productDescription}
+						</Card.Text>
+						<Card.Text>
+							Published: {published ? <small>True</small> : <small>False</small>}
 						</Card.Text>
 						<br />
 

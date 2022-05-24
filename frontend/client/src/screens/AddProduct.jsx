@@ -1,28 +1,40 @@
 import axios from 'axios'
 import React, { useState } from 'react'
 import { Container, Form, Button } from 'react-bootstrap'
+import { useNavigate } from 'react-router'
 
-const AddProduct = ({ history }) => {
+const AddProduct = () => {
 
 	const [title, setTitle] = useState('')
 	const [price, setPrice] = useState(0)
 	const [description, setDescription] = useState('')
+	const [published, setPublished] = useState(true)
+	const [image, setImage] = useState('')
+
+	const navigate = useNavigate()
 
 	const AddProductHandler = async (e) => {
 
 		e.preventDefault()
 
-		const data = {
-			title: title,
-			price: price,
-			description: description,
-			published: true
-		}
+		// const data = {
+		// 	title: title,
+		// 	price: price,
+		// 	description: description,
+		// 	published: published
+		// }
 
-		await axios.post('/api/products/addProduct', data)
+		const formData = new FormData()
 
+		formData.append('image', image)
+		formData.append('title', title)
+		formData.append('price', price)
+		formData.append('description', description)
+		formData.append('published', published)
 
-		history.push('/products')
+		await axios.post('/api/products/addProduct', formData)
+
+		navigate('/products')
 
 	}
 
@@ -33,7 +45,18 @@ const AddProduct = ({ history }) => {
 				<h1>Add Product</h1>
 				<hr />
 
-				<Form onSubmit={AddProductHandler}>
+				<Form onSubmit={AddProductHandler} method='POST' encType='multipart/form-data'>
+
+					<Form.Group controlId='fileName' className='mb-3'>
+						<Form.Label>Upload Image</Form.Label>
+						<Form.Control
+							type='file'
+							name='image'
+							onChange={(e) => setImage(e.target.files[0])}
+							size='lg'
+						/>
+					</Form.Group>
+
 					<Form.Group className="mb-3" controlId="title">
 						<Form.Label>Title</Form.Label>
 						<Form.Control
@@ -56,6 +79,14 @@ const AddProduct = ({ history }) => {
 							value={description}
 							onChange={(e) => setDescription(e.target.value)}
 							as="textarea" />
+					</Form.Group>
+
+					<Form.Group className="mb-3" controlId="publishedCheckedId">
+						<Form.Check 
+						type = "checkbox"
+						onChange={(e) => setPublished(e.target.checked)}
+						label = "publish"
+						/>
 					</Form.Group>
 
 					<Button variant="primary" type="submit">
